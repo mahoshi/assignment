@@ -109,20 +109,14 @@ console.log(exifData.gps.GPSLatitude[0]);
 if (exifData.gps.GPSLatitudeRef == 'S'){
 	rest[0].lat = 0 - (exifData.gps.GPSLatitude[0] + exifData.gps.GPSLatitude[1]/60 + exifData.gps.GPSLatitude[2]/3600);
 }
-else if(exifData.gps.GPSLatitudeRef == 'N'){
-	rest[0].lat = exifData.gps.GPSLatitude[0] + exifData.gps.GPSLatitude[1]/60 + exifData.gps.GPSLatitude[2]/3600;
-}
 else{
-	rest[0].lat = 0;
+	rest[0].lat = exifData.gps.GPSLatitude[0] + exifData.gps.GPSLatitude[1]/60 + exifData.gps.GPSLatitude[2]/3600;
 }
 if (exifData.gps.GPSLongitude == 'W'){
 	rest[0].lon = 0 - (exifData.gps.GPSLongitude[0] + exifData.gps.GPSLongitude[1]/60 + exifData.gps.GPSLongitude[2]/3600);
 }
-else if(exifData.gps.GPSLongitude == 'E'){
-	rest[0].lon = exifData.gps.GPSLongitude[0] + exifData.gps.GPSLongitude[1]/60 + exifData.gps.GPSLongitude[2]/3600;
-}
 else{
-	rest[0].lon = 0;
+	rest[0].lon = exifData.gps.GPSLongitude[0] + exifData.gps.GPSLongitude[1]/60 + exifData.gps.GPSLongitude[2]/3600;
 }
 	console.log(rest[0].make);
 	console.log(rest[0].model);
