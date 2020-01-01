@@ -46,9 +46,9 @@ app.post('/uploadPhoto', (req,res) => {
         new_r['description'] = description;
         new_r['mimetype'] = mimetype;
         new_r['image'] = new Buffer.from(data).toString('base64');
-	new_r['make'] = "haha";
-	new_r['model'] = "";
-	new_r['date'] = "";
+	new_r['make'] = "null";
+	new_r['model'] = "null";
+	new_r['date'] = "null";
 	new_r['lon'] = 0;
 	new_r['lat'] = 0;
         upload_photo(db,new_r,(result) => {
@@ -96,27 +96,33 @@ app.get('/display', (req,res) => {
 	new ExifImage({ image : image_ }, function (error, exifData) {
         if (error){
             console.log('Error: '+error.message);
-          res.redirect(301,'/uploadPhoto');
+        res.render('detail.ejs',{rest:rest});
 	}
         else{
 	console.log(rest[0].title);
             console.log(exifData.exif.FNumber);
 	console.log(exifData);
-	rest[0].make = exifData.image.Make;
-	rest[0].model = exifData.image.Model;
-	rest[0].date = exifData.image.ModifyDate;
+	rest[0].make = (exifData.image.Make.length>0)?exifData.image.Make:"null";
+	rest[0].model = (exifData.image.Model.length>0)?exifData.image.Model:"null";
+	rest[0].date = (exifData.image.ModifyDate.length>0)?exifData.image.ModifyDate:"null";
 console.log(exifData.gps.GPSLatitude[0]);
 if (exifData.gps.GPSLatitudeRef == 'S'){
 	rest[0].lat = 0 - (exifData.gps.GPSLatitude[0] + exifData.gps.GPSLatitude[1]/60 + exifData.gps.GPSLatitude[2]/3600);
 }
-else{
+else if(exifData.gps.GPSLatitudeRef == 'N'){
 	rest[0].lat = exifData.gps.GPSLatitude[0] + exifData.gps.GPSLatitude[1]/60 + exifData.gps.GPSLatitude[2]/3600;
+}
+else{
+	rest[0].lat = 0;
 }
 if (exifData.gps.GPSLongitude == 'W'){
 	rest[0].lon = 0 - (exifData.gps.GPSLongitude[0] + exifData.gps.GPSLongitude[1]/60 + exifData.gps.GPSLongitude[2]/3600);
 }
-else{
+else if(exifData.gps.GPSLongitude == 'E'){
 	rest[0].lon = exifData.gps.GPSLongitude[0] + exifData.gps.GPSLongitude[1]/60 + exifData.gps.GPSLongitude[2]/3600;
+}
+else{
+	rest[0].lon = 0;
 }
 	console.log(rest[0].make);
 	console.log(rest[0].model);
