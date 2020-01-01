@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<body>
+    <div>
+        <h1><%=rest[0].title%></h1>
+        <p><%=rest[0].description%></p>
+    </div>
+<div class="row">
+<div class="col-lg-8">
+    <img src=" data:<%=rest[0].mimetype%>;base64, <%=rest[0].image%>" style="width:100%">
+</div>
+    <div class="col-lg-4">
+	<ul class="list-group">
+	<li class="list-group-item">Make: <%=rest[0].make %></li>
+	<li class="list-group-item">Model: <%=rest[0].model %></li>
+	<li class="list-group-item">Created on: <%=rest[0].date %></li>
+	<li class="list-group-item">Location: <a href=/map?lon=<%= rest[0].lon %>&lat=<%= rest[0].lat %>>Map</a></li>
+	</ul>
+    </div>
+</div>
+<form action="uploadPhoto" method="get" enctype="multipart/form-data">
+        <button class="btn btn-primary">Home</button>
+</form>
+</body>
+
+</html>
